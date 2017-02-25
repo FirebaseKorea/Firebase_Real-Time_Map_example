@@ -18,9 +18,9 @@ public class StartActivity extends BaseActivity {
 
         SharedPreferenceUtil.getInstance().init(getApplicationContext());
 
+        String firebaseUid = UserUtil.loadUserFirebaseUid();
 
-        // TODO : Load firebase Uid
-        callLoginActivity();
+        switchActivity(firebaseUid);
 
         init();
     }
