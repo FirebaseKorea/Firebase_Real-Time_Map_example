@@ -9,7 +9,11 @@ import android.content.SharedPreferences;
 
 public class SharedPreferenceUtil {
     public static final String DEFAULT_SETTING = "FIREBASE_KOREA_REAL_TIME_MAP";
-//    public static final String USER_NAME = "user_name";
+
+    public static final String FIREBASE_UID = "firebase_uid";
+    public static final String USER_EMAIL = "user_email";
+    public static final String USER_NAME = "user_name";
+    public static final String USER_PROFILE_URL = "user_profile_picture_url";
 
     private static volatile SharedPreferenceUtil instance = null;
 
