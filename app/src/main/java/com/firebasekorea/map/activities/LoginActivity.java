@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.firebasekorea.map.R;
 import com.firebasekorea.map.utils.ToastUtil;
+import com.firebasekorea.map.utils.UserUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -97,7 +98,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     ToastUtil.makeShortToast(LoginActivity.this, "로그인중입니다");
 
                     // TODO : save User Profile to Firebase
+                    saveUserToFirebaseDatabase(user);
                     // TODO : save User Data to Local Device
+                    saveUserToLocalDevice(user);
 
                     callMainActivity();
                 }
@@ -151,7 +154,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
             else {
                 // Google Sign In failed, update UI appropriately
-                saveUserInLocalDevice(null);
+                saveUserToLocalDevice(null);
             }
         }
     }
@@ -180,8 +183,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 });
     }
 
-    private void saveUserInLocalDevice(FirebaseUser user) {
+    private void saveUserToFirebaseDatabase(FirebaseUser user) {
+        String firebaseUid = user.getUid();
+        String userEmail = user.getEmail();
+        String userName = user.getDisplayName();
+        String profilePictureUrl = user.getPhotoUrl().toString();
 
+        UserController.createUser(firebaseUid, userEmail, userName, profilePictureUrl);
+    }
+
+    private void saveUserToLocalDevice(FirebaseUser user) {
+        String firebaseUid = user.getUid();
+        String userEmail = user.getEmail();
+        String userName = user.getDisplayName();
+        String profilePictureUrl = user.getPhotoUrl().toString();
+
+        UserUtil.saveUserFirebaseUid(firebaseUid);
+        UserUtil.saveUserEmail(userEmail);
+        UserUtil.saveUserName(userName);
+        UserUtil.saveUserProfilePictureUrl(profilePictureUrl);
     }
 
     private void callMainActivity() {
