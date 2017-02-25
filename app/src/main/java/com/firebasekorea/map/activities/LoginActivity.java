@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.firebasekorea.map.R;
+import com.firebasekorea.map.controllers.UserController;
 import com.firebasekorea.map.utils.ToastUtil;
 import com.firebasekorea.map.utils.UserUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -46,10 +47,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     /* Google Login */
     private GoogleApiClient mGoogleApiClient;
-
-    /* Firebase Database */
-    private DatabaseReference mUserReference;
-    private ValueEventListener mUserListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
