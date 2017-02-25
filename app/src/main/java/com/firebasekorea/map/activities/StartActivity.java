@@ -20,7 +20,7 @@ public class StartActivity extends BaseActivity {
 
 
         // TODO : Load firebase Uid
-//        callLoginActivity();
+        callLoginActivity();
 
         init();
     }
