@@ -37,6 +37,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private final String TAG = LoginActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 9001;
 
+    private long pressTime = 0;
+
     /* View Component */
     private RelativeLayout mLoginGoogleLayout;
 
@@ -68,6 +70,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis() > pressTime + 2000) {
+            pressTime = System.currentTimeMillis();
+            ToastUtil.makeShortToast(LoginActivity.this, "뒤로가기 버튼을 한 번 더 누르면 종료됩니다.");
+        }
+        else {
+            finishAffinity();
         }
     }
 
@@ -204,6 +217,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void callMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }
