@@ -3,6 +3,7 @@ package com.firebasekorea.map.activities;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.firebasekorea.map.R;
 import com.firebasekorea.map.fragments.NaverMapFragment;
@@ -21,6 +22,9 @@ public class MainActivity extends BaseActivity {
     private long pressTime = 0;
 
     /* View Component */
+    private TextView mLongitudeTextView;
+    private TextView mLatitudeTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
+        mLongitudeTextView = (TextView) findViewById(R.id.main_longitude);
+        mLatitudeTextView = (TextView) findViewById(R.id.main_latitude);
+    }
 
+    public void updateGeoPoint(double longitude, double latitude) {
+        mLongitudeTextView.setText("경도 : " + longitude);
+        mLatitudeTextView.setText("위도 : " + latitude);
     }
 }

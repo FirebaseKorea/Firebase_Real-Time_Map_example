@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -11,4 +11,35 @@
         android:layout_height="match_parent"
         android:name="com.firebasekorea.map.fragments.NaverMapFragment" />
 
-</LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/main_longitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                android:text="경도 : "/>
+
+            <TextView
+                android:id="@+id/main_latitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_longitude"
+                android:textAlignment="viewEnd"
+                android:textStyle="bold"
+                android:text="위도 : "/>
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+</RelativeLayout>
