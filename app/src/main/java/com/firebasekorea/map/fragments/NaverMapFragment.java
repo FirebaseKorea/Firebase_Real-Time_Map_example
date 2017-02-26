@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.firebasekorea.map.R;
 import com.firebasekorea.map.activities.MainActivity;
+import com.firebasekorea.map.models.Marker;
 import com.firebasekorea.map.navermap.NMapPOIflagType;
 import com.firebasekorea.map.navermap.NMapViewerResourceProvider;
 import com.firebasekorea.map.utils.ToastUtil;
@@ -22,6 +23,8 @@ import com.nhn.android.maps.nmapmodel.NMapError;
 import com.nhn.android.maps.overlay.NMapPOIdata;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
+
+import java.util.ArrayList;
 
 /**
  * Created by namhoonkim on 25/02/2017.
@@ -182,14 +185,13 @@ public class NaverMapFragment extends Fragment {
         }
     };
 
-    public void addMakerOverlay() {
-        int markerId = NMapPOIflagType.PIN;
-
+    public void addMakerOverlay(ArrayList<Marker> markerList) {
         // set POI data
         NMapPOIdata poiData = new NMapPOIdata(2, mNMapViewerResourceProvider);
-        poiData.beginPOIdata(2);
-        poiData.addPOIitem(127.0630205, 37.5091300, "Pizza 777-111", markerId, 0);
-        poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
+        poiData.beginPOIdata(markerList.size());
+        for(Marker m : markerList) {
+            poiData.addPOIitem(m.longitude, m.latitude, m.description, NMapPOIflagType.PIN, null);
+        }
         poiData.endPOIdata();
 
         // create POI data overlay
