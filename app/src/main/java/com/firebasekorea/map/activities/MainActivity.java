@@ -28,6 +28,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView mLongitudeTextView;
     private TextView mLatitudeTextView;
 
+    private NaverMapFragment mNaverMapFragment;
+
     private FloatingActionButton mFloatingActionButton;
 
     @Override
@@ -57,6 +59,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mLatitudeTextView = (TextView) findViewById(R.id.main_latitude);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.main_floating);
         mFloatingActionButton.setOnClickListener(this);
+
+        mNaverMapFragment = (NaverMapFragment) getFragmentManager().findFragmentById(R.id.main_map_fragment);
     }
 
     public void updateGeoPoint(double longitude, double latitude) {
@@ -83,6 +87,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         Log.d(TAG, "longtitude : " + longtitude);
         Log.d(TAG, "latitude   : " + latitude);
+        mNaverMapFragment.addMakerOverlay();
     }
 
 }

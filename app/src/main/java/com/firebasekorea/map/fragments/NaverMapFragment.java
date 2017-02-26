@@ -12,11 +12,16 @@ import android.view.ViewGroup;
 
 import com.firebasekorea.map.R;
 import com.firebasekorea.map.activities.MainActivity;
+import com.firebasekorea.map.navermap.NMapPOIflagType;
+import com.firebasekorea.map.navermap.NMapViewerResourceProvider;
 import com.firebasekorea.map.utils.ToastUtil;
 import com.nhn.android.maps.NMapContext;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
+import com.nhn.android.maps.overlay.NMapPOIdata;
+import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
+import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 
 /**
  * Created by namhoonkim on 25/02/2017.
@@ -35,6 +40,9 @@ public class NaverMapFragment extends Fragment {
     /* Location */
     private LocationManager mLocationManager;
 
+    /* Map Overlay */
+    private NMapViewerResourceProvider mNMapViewerResourceProvider;
+    private NMapOverlayManager mNMapOverlayManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,7 @@ public class NaverMapFragment extends Fragment {
         mMapContext = new NMapContext(super.getActivity());
         mMapContext.onCreate();
 
+        // TODO : 현재 위치로 지도를 이동 시킨다
         mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
     }
 
@@ -60,6 +69,9 @@ public class NaverMapFragment extends Fragment {
         mMapView.setClientId(getString(R.string.naver_client_id));
         mMapContext.setupMapView(mMapView);
 
+        mNMapViewerResourceProvider = new NMapViewerResourceProvider(getActivity());
+
+        mNMapOverlayManager = new NMapOverlayManager(getActivity(), mMapView, mNMapViewerResourceProvider);
 
 
 
@@ -169,5 +181,19 @@ public class NaverMapFragment extends Fragment {
             ((MainActivity)getActivity()).updateGeoPoint(nGeoPoint.getLongitude(), nGeoPoint.getLatitude());
         }
     };
+
+    public void addMakerOverlay() {
+        int markerId = NMapPOIflagType.PIN;
+
+        // set POI data
+        NMapPOIdata poiData = new NMapPOIdata(2, mNMapViewerResourceProvider);
+        poiData.beginPOIdata(2);
+        poiData.addPOIitem(127.0630205, 37.5091300, "Pizza 777-111", markerId, 0);
+        poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
+        poiData.endPOIdata();
+
+        // create POI data overlay
+        NMapPOIdataOverlay poiDataOverlay = mNMapOverlayManager.createPOIdataOverlay(poiData, null);
+    }
 
 }

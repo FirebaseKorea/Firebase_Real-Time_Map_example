@@ -3,4 +3,6 @@
 
 
     <string name="naver_client_id">YOUR_CLIENT_ID</string>
+    <string name="str_done">완료</string>
+
 </resources>
