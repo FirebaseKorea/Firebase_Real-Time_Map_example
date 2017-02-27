@@ -2,6 +2,7 @@ package com.firebasekorea.map.activities;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -151,19 +152,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void onClickFloatingButton() {
-        String longtitude = mLongitudeTextView.getText().toString().substring(5);
+        String longitude = mLongitudeTextView.getText().toString().substring(5);
         String latitude = mLatitudeTextView.getText().toString().substring(5);
 
-        if (longtitude == null || longtitude.length() < 1) {
+        if (longitude == null || longitude.length() < 1) {
             ToastUtil.makeShortToast(this, "경도 및 위도가 선택되지 않았습니다");
+            return;
         }
 
-        Log.d(TAG, "longtitude : " + longtitude);
-        Log.d(TAG, "latitude   : " + latitude);
-
-        // TODO : 마커의 정보를 상세 입력하는 뷰가 필요하다
-        MarkerController.createMarker(Double.parseDouble(longtitude), Double.parseDouble(latitude), "");
-
+        Intent intent = new Intent(this, AddMarkerActivity.class);
+        intent.putExtra("longitude", longitude);
+        intent.putExtra("latitude", latitude);
+        startActivity(intent);
     }
 
 }

@@ -18,17 +18,23 @@ public class Marker {
 
     public Double latitude;
 
-    public String description;
+    public Boolean isPicture;
+
+    public Boolean isPikachu;
+
+    public String markerImageUrl;
 
     public Boolean isDeleted;
 
     public Marker() {}
 
-    public Marker(String markerUid, Double longitude, Double latitude, String description) {
+    public Marker(String markerUid, Double longitude, Double latitude, boolean isPicture, boolean isPikachu) {
         this.markerUid = markerUid;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.description = description;
+        this.isPicture = isPicture;
+        this.isPikachu = isPikachu;
+        this.markerImageUrl = "";
         this.isDeleted = false;
     }
 
@@ -38,7 +44,9 @@ public class Marker {
         result.put("markerUid", markerUid);
         result.put("longitude", longitude);
         result.put("latitude", latitude);
-        result.put("description", description);
+        result.put("isPicture", isPicture);
+        result.put("isPikachu", isPikachu);
+        result.put("markerImageUrl", markerImageUrl);
         result.put("isDeleted", isDeleted);
         return result;
     }
@@ -49,7 +57,9 @@ public class Marker {
         marker.markerUid = (String) snapshot.child("markerUid").getValue();
         marker.longitude = (Double) snapshot.child("longitude").getValue();
         marker.latitude = (Double) snapshot.child("latitude").getValue();
-        marker.description = (String) snapshot.child("description").getValue();
+        marker.isPicture = (Boolean) snapshot.child("isPicture").getValue();
+        marker.isPikachu = (Boolean) snapshot.child("isPikachu").getValue();
+        marker.markerImageUrl = (String) snapshot.child("markerImageUrl").getValue();
         marker.isDeleted = (Boolean) snapshot.child("isDeleted").getValue();
 
         return marker;

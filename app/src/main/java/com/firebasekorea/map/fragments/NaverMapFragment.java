@@ -15,7 +15,6 @@ import com.firebasekorea.map.activities.MainActivity;
 import com.firebasekorea.map.models.Marker;
 import com.firebasekorea.map.navermap.NMapPOIflagType;
 import com.firebasekorea.map.navermap.NMapViewerResourceProvider;
-import com.firebasekorea.map.utils.ToastUtil;
 import com.nhn.android.maps.NMapContext;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
@@ -23,7 +22,6 @@ import com.nhn.android.maps.nmapmodel.NMapError;
 import com.nhn.android.maps.overlay.NMapPOIdata;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
-
 import java.util.ArrayList;
 
 /**
@@ -187,10 +185,15 @@ public class NaverMapFragment extends Fragment {
 
     public void addMakerOverlay(ArrayList<Marker> markerList) {
         // set POI data
-        NMapPOIdata poiData = new NMapPOIdata(2, mNMapViewerResourceProvider);
+        final NMapPOIdata poiData = new NMapPOIdata(markerList.size(), mNMapViewerResourceProvider);
         poiData.beginPOIdata(markerList.size());
-        for(Marker m : markerList) {
-            poiData.addPOIitem(m.longitude, m.latitude, m.description, NMapPOIflagType.PIN, null);
+        for(final Marker m : markerList) {
+            if (m.isPicture) {
+                poiData.addPOIitem(m.longitude, m.latitude, "", NMapPOIflagType.PIN, null);
+            }
+            else if (m.isPikachu) {
+                poiData.addPOIitem(m.longitude, m.latitude, "", getActivity().getDrawable(R.mipmap.ic_pikachu), null);
+            }
         }
         poiData.endPOIdata();
 

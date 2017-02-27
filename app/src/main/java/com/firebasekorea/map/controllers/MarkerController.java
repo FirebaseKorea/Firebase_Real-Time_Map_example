@@ -12,10 +12,10 @@ import java.util.Map;
 
 public class MarkerController {
 
-    public static String createMarker(double longitude, double latitude, String description) {
+    public static String createMarker(double longitude, double latitude, boolean isPicture, boolean isPikachu) {
         String markerUid = FirebaseDatabase.getInstance().getReference().child("markers").push().getKey();
 
-        Marker marker = new Marker(markerUid, longitude, latitude, description);
+        Marker marker = new Marker(markerUid, longitude, latitude, isPicture, isPikachu);
 
         Map<String, Object> markerValues = marker.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
@@ -42,5 +42,12 @@ public class MarkerController {
     public static void deleteMarker(String firebaseUid, Marker marker) {
         marker.isDeleted = true;
         editMarker(firebaseUid, marker);
+    }
+
+    public static void updateImageUrl(String markerUid, String markerImageUrl) {
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("markerImageUrl", markerImageUrl);
+
+        editMarker(markerUid, childUpdates);
     }
 }
